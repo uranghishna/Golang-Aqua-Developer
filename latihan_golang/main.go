@@ -44,14 +44,14 @@ func main() {
 	fmt.Println("halo %s %s!\n", name1, name2)
 
 	// Declaration Multi Variable
-	var firstt, second, third string
-	firstt, second, third = "satu", "dua", "tiga"
-	seventh, eight, ninth := "tujuh", "delapan", "sembilan"
+	// var firstt, second, third string
+	// firstt, second, third = "satu", "dua", "tiga"
+	// seventh, eight, ninth := "tujuh", "delapan", "sembilan"
 	
-	// Declaration Underscore Variables
-	_="belajar golang"
-	_="golang itu mudah"
-	nama, _ := "ja","wi"
+	// // Declaration Underscore Variables
+	// _="belajar golang"
+	// _="golang itu mudah"
+	// nama, _ := "ja","wi"
 
 	// Constants
 	const firstName string = "koje"
@@ -70,7 +70,7 @@ func main() {
 	}
 
 	// switch..case
-	var point = 6
+	// var point = 6
 	switch point {
 	case 8:
 		fmt.Println("perfect")
@@ -80,7 +80,7 @@ func main() {
 		fmt.Println("not bad")
 	}
 
-	// for..ramge
+	// for..range
 	var fruits = [4]string{"apple", "grape", "banana", "melon"}
 	for i, fruit := range fruits {
 		fmt.Printf("element %d : %s", i, fruit)		
