@@ -1,16 +1,17 @@
 package main
 
 import (
-	"gorm/usecase"
-	"gorm/repository"
 	"gorm/config"
-	"gorm/routes"
 	"gorm/handler"
+	"gorm/repository"
+	"gorm/routes"
+	"gorm/usecase"
+
 	// "gorm/entity"
 	"github.com/labstack/echo/v4"
 )
 
-func main()  {
+func main() {
 	config.Database()
 	config.Migrate()
 
