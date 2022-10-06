@@ -10,8 +10,11 @@ import (
 type IProductUsecase interface {
 	CreateProduct(Product entity.ProductRequest) (entity.Product, error)
 	GetAllProduct() ([]entity.Product, error)
+	GetProductById(id int) (entity.Product, error)
 	UpdateProduct(ProductRequest entity.UpdateProductRequest, id int) (entity.ProductResponse, error)
 	DeleteProduct(id int) error
+	GetProductByCategory(category string) ([]entity.Product, error)
+	GetProductByPrice(priceMin int, priceMax int) ([]entity.Product, error)
 }
 
 type ProductUsecase struct {
@@ -58,6 +61,36 @@ func (usecase ProductUsecase) GetAllProduct() ([]entity.ProductResponse, error) 
 	ProductRes := []entity.ProductResponse{}
 	copier.Copy(&ProductRes, &Products)
 	return ProductRes, nil
+}
+
+func (usecase ProductUsecase) GetProductById(id int) (entity.ProductResponse, error) {
+	product, err := usecase.ProductRepository.FindById(id)
+	if err != nil {
+		return entity.ProductResponse{}, err
+	}
+	productRes := entity.ProductResponse{}
+	copier.Copy(&productRes, &product)
+	return productRes, nil
+}
+
+func (usecase ProductUsecase) GetProductByCategory(category string) ([]entity.ProductResponse, error) {
+	product, err := usecase.ProductRepository.FindByCategory(category)
+	if err != nil {
+		return []entity.ProductResponse{}, err
+	}
+	productRes := []entity.ProductResponse{}
+	copier.Copy(&productRes, &product)
+	return productRes, nil
+}
+
+func (usecase ProductUsecase) GetProductByPrice(priceMin int, priceMax int) ([]entity.ProductResponse, error) {
+	product, err := usecase.ProductRepository.FindByPrice(priceMin, priceMax)
+	if err != nil {
+		return []entity.ProductResponse{}, err
+	}
+	productRes := []entity.ProductResponse{}
+	copier.Copy(&productRes, &product)
+	return productRes, nil
 }
 
 func (usecase ProductUsecase) UpdateProduct(ProductRequest entity.UpdateProductRequest, id int) (entity.ProductResponse, error) {

@@ -1,0 +1,187 @@
+definitions:
+  entity.ProductRequest:
+    properties:
+      category:
+        type: string
+      description:
+        type: string
+      name:
+        type: string
+      photo:
+        type: string
+      price:
+        type: integer
+    type: object
+  entity.ProductResponse:
+    properties:
+      category:
+        type: string
+      description:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      photo:
+        type: string
+      price:
+        type: integer
+    type: object
+  entity.UserRequest:
+    properties:
+      email:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+    type: object
+  entity.UserResponse:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      password:
+        type: string
+    type: object
+host: petstore.swagger.io
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server Petstore server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /products/create:
+    post:
+      description: create product.
+      parameters:
+      - description: silahkan daftarkan data product
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/entity.ProductRequest'
+      - description: file anda
+        in: formData
+        name: Body
+        required: true
+        type: file
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.ProductResponse'
+      summary: Create Product.
+      tags:
+      - products
+  /users:
+    get:
+      description: get user.
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            items:
+              $ref: '#/definitions/entity.UserResponse'
+            type: array
+      summary: Get All User.
+      tags:
+      - Users
+  /users/{id}:
+    get:
+      description: get user by id.
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.UserResponse'
+      summary: Get User By Id
+      tags:
+      - Users
+  /users/create:
+    post:
+      description: create user.
+      parameters:
+      - description: silahkan daftarkan data user
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/entity.UserRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.UserResponse'
+      summary: Create User.
+      tags:
+      - Users
+  /users/delete/{id}:
+    delete:
+      description: Delete User by id.
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete User
+      tags:
+      - Users
+  /users/update/{id}:
+    put:
+      description: update users.
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: silahkan ubah data user
+        in: body
+        name: Body
+        required: true
+        schema:
+          $ref: '#/definitions/entity.UserRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.UserResponse'
+      summary: Update Users
+      tags:
+      - Users
+swagger: "2.0"

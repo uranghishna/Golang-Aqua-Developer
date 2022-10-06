@@ -3,7 +3,9 @@ package config
 import (
 	// "os"
 
+	"ecommerce/entity"
 	"fmt"
+	"os"
 
 	// "github.com/virhanali/user-management/domain/models"
 	"gorm.io/driver/postgres"
@@ -25,6 +27,13 @@ func Database() {
 	fmt.Println("database connect")
 }
 
-// func Migrate() {
-// 	DB.AutoMigrate(&entity.Product{})
-// }
+func Migrate() {
+	DB.AutoMigrate(&entity.Cart{})
+}
+
+func Getenv(key, fallback string) string {
+	if value, ok := os.LookupEnv(key); ok {
+		return value
+	}
+	return fallback
+}

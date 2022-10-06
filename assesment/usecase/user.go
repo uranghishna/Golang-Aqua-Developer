@@ -10,6 +10,7 @@ import (
 type IUserUsecase interface {
 	CreateUser(user entity.UserRequest) (entity.User, error)
 	GetAllUser() ([]entity.User, error)
+	GetProductById(id int) (entity.Product, error)
 	UpdateUser(userRequest entity.UpdateUserRequest, id int) (entity.UserResponse, error)
 	DeleteUser(id int) error
 }
@@ -53,6 +54,16 @@ func (usecase UserUsecase) GetAllUser() ([]entity.UserResponse, error) {
 
 	userRes := []entity.UserResponse{}
 	copier.Copy(&userRes, &users)
+	return userRes, nil
+}
+
+func (usecase UserUsecase) GetUserById(id int) (entity.UserResponse, error) {
+	user, err := usecase.userRepository.FindById(id)
+	if err != nil {
+		return entity.UserResponse{}, err
+	}
+	userRes := entity.UserResponse{}
+	copier.Copy(&userRes, &user)
 	return userRes, nil
 }
 
