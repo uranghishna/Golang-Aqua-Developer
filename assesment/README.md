@@ -40,7 +40,7 @@ Setelah itu jalankan kembali programnya dengan command "go run ." .
 Untuk melihat endpoint API yang tersedia, bisa menggunakan link swagger pada local. contoh:
 
 ```bash
- http://localhost:8080/swagger/index.html
+ http://localhost:8000/swagger/index.html
 ```
 
 atau ekstrak collection.json yang sudah tersedia pada aplikasi di postman.
