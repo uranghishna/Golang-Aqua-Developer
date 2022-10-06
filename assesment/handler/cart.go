@@ -23,6 +23,14 @@ func NewCartHandler(CartUsecase *usecase.CartUsecase) *CartHandler {
 	return &CartHandler{CartUsecase}
 }
 
+// Create Cart godoc
+// @Summary Create Cart.
+// @Description Create Cart.
+// @Tags Carts
+// @Param Body body entity.CartResponse true "Buat cart"
+// @Produce json
+// @Success 200 {object} entity.CartResponse
+// @Router /carts [post]
 func (handler CartHandler) CreateCart(c echo.Context) error {
 	req := entity.CartRequest{}
 
@@ -39,6 +47,13 @@ func (handler CartHandler) CreateCart(c echo.Context) error {
 	return c.JSON(201, Cart)
 }
 
+// Get All Carts godoc
+// @Summary Get All Carts.
+// @Description get All Carts.
+// @Tags Carts
+// @Produce json
+// @Success 200 {object} entity.CartResponse
+// @Router /carts [get]
 func (handler CartHandler) GetAllCart(c echo.Context) error {
 
 	Cart, err := handler.CartUsecase.GetAllCart()

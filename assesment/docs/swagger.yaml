@@ -1,10 +1,29 @@
 definitions:
-  entity.ProductRequest:
+  entity.CartResponse:
+    properties:
+      checkout:
+        type: boolean
+      id:
+        type: integer
+      product:
+        $ref: '#/definitions/entity.Product'
+      productID:
+        type: integer
+      quantity:
+        type: integer
+      user:
+        $ref: '#/definitions/entity.User'
+      userID:
+        type: integer
+    type: object
+  entity.Product:
     properties:
       category:
         type: string
       description:
         type: string
+      id:
+        type: integer
       name:
         type: string
       photo:
@@ -26,6 +45,17 @@ definitions:
         type: string
       price:
         type: integer
+    type: object
+  entity.User:
+    properties:
+      email:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      password:
+        type: string
     type: object
   entity.UserRequest:
     properties:
@@ -61,21 +91,147 @@ info:
   title: Swagger Example API
   version: "1.0"
 paths:
-  /products/create:
+  /carts:
+    get:
+      description: get All Carts.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.CartResponse'
+      summary: Get All Carts.
+      tags:
+      - Carts
     post:
-      description: create product.
+      description: Create Cart.
       parameters:
-      - description: silahkan daftarkan data product
+      - description: Buat cart
         in: body
         name: Body
         required: true
         schema:
-          $ref: '#/definitions/entity.ProductRequest'
-      - description: file anda
-        in: formData
-        name: Body
+          $ref: '#/definitions/entity.CartResponse'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.CartResponse'
+      summary: Create Cart.
+      tags:
+      - Carts
+  /products:
+    get:
+      description: get product.
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            items:
+              $ref: '#/definitions/entity.ProductResponse'
+            type: array
+      summary: Get All Product.
+      tags:
+      - Products
+  /products/{category}:
+    get:
+      description: get products by category.
+      parameters:
+      - description: product category
+        in: path
+        name: category
         required: true
-        type: file
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Get Products by category
+      tags:
+      - Products
+  /products/{id}:
+    delete:
+      description: Delete Product by id.
+      parameters:
+      - description: product id
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Delete Product
+      tags:
+      - Products
+    get:
+      description: get User by id.
+      parameters:
+      - description: user id
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.ProductResponse'
+      summary: Get User By Id
+      tags:
+      - Products
+  /products/{priceMin}/{priceMax}:
+    get:
+      description: Get Products by price.
+      parameters:
+      - description: product price
+        in: path
+        name: priceMin,priceMax
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: Get Products by price
+      tags:
+      - Products
+  /products/create:
+    post:
+      description: create product.
+      parameters:
+      - in: formData
+        name: category
+        type: string
+      - in: formData
+        name: description
+        type: string
+      - in: formData
+        name: name
+        type: string
+      - in: formData
+        name: photo
+        type: string
+      - in: formData
+        name: price
+        type: integer
       produces:
       - application/json
       responses:
@@ -85,7 +241,36 @@ paths:
             $ref: '#/definitions/entity.ProductResponse'
       summary: Create Product.
       tags:
-      - products
+      - Products
+  /products/update:
+    post:
+      description: Update product.
+      parameters:
+      - in: formData
+        name: category
+        type: string
+      - in: formData
+        name: description
+        type: string
+      - in: formData
+        name: name
+        type: string
+      - in: formData
+        name: photo
+        type: string
+      - in: formData
+        name: price
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/entity.ProductResponse'
+      summary: Update Product.
+      tags:
+      - Products
   /users:
     get:
       description: get user.

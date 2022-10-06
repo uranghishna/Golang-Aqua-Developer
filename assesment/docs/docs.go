@@ -25,6 +25,78 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/carts": {
+            "get": {
+                "description": "get All Carts.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Carts"
+                ],
+                "summary": "Get All Carts.",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CartResponse"
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create Cart.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Carts"
+                ],
+                "summary": "Create Cart.",
+                "parameters": [
+                    {
+                        "description": "Buat cart",
+                        "name": "Body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.CartResponse"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entity.CartResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/products": {
+            "get": {
+                "description": "get product.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get All Product.",
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/entity.ProductResponse"
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/products/create": {
             "post": {
                 "description": "create product.",
@@ -32,25 +104,34 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "products"
+                    "Products"
                 ],
                 "summary": "Create Product.",
                 "parameters": [
                     {
-                        "description": "silahkan daftarkan data product",
-                        "name": "Body",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/entity.ProductRequest"
-                        }
+                        "type": "string",
+                        "name": "category",
+                        "in": "formData"
                     },
                     {
-                        "type": "file",
-                        "description": "file anda",
-                        "name": "Body",
-                        "in": "formData",
-                        "required": true
+                        "type": "string",
+                        "name": "description",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "name": "photo",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "price",
+                        "in": "formData"
                     }
                 ],
                 "responses": {
@@ -58,6 +139,167 @@ const docTemplate = `{
                         "description": "Created",
                         "schema": {
                             "$ref": "#/definitions/entity.ProductResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/products/update": {
+            "post": {
+                "description": "Update product.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Update Product.",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "category",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "name": "description",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "string",
+                        "name": "photo",
+                        "in": "formData"
+                    },
+                    {
+                        "type": "integer",
+                        "name": "price",
+                        "in": "formData"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/entity.ProductResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/products/{category}": {
+            "get": {
+                "description": "get products by category.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get Products by category",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "product category",
+                        "name": "category",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/products/{id}": {
+            "get": {
+                "description": "get User by id.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get User By Id",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "user id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/entity.ProductResponse"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Product by id.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Delete Product",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "product id",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                }
+            }
+        },
+        "/products/{priceMin}/{priceMax}": {
+            "get": {
+                "description": "Get Products by price.",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Products"
+                ],
+                "summary": "Get Products by price",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "product price",
+                        "name": "priceMin,priceMax",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "string"
                         }
                     }
                 }
@@ -215,7 +457,33 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "entity.ProductRequest": {
+        "entity.CartResponse": {
+            "type": "object",
+            "properties": {
+                "checkout": {
+                    "type": "boolean"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "product": {
+                    "$ref": "#/definitions/entity.Product"
+                },
+                "productID": {
+                    "type": "integer"
+                },
+                "quantity": {
+                    "type": "integer"
+                },
+                "user": {
+                    "$ref": "#/definitions/entity.User"
+                },
+                "userID": {
+                    "type": "integer"
+                }
+            }
+        },
+        "entity.Product": {
             "type": "object",
             "properties": {
                 "category": {
@@ -223,6 +491,9 @@ const docTemplate = `{
                 },
                 "description": {
                     "type": "string"
+                },
+                "id": {
+                    "type": "integer"
                 },
                 "name": {
                     "type": "string"
@@ -255,6 +526,23 @@ const docTemplate = `{
                 },
                 "price": {
                     "type": "integer"
+                }
+            }
+        },
+        "entity.User": {
+            "type": "object",
+            "properties": {
+                "email": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
                 }
             }
         },
